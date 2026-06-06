@@ -40,7 +40,7 @@ function loadGoogleMaps(): Promise<void> {
       key: BROWSER_KEY,
       loading: "async",
       callback: CALLBACK_NAME,
-      libraries: "routes",
+      libraries: "geometry",
     });
     if (CHANNEL) params.set("channel", CHANNEL);
     script.src = `https://maps.googleapis.com/maps/api/js?${params.toString()}`;
