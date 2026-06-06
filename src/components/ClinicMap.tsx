@@ -200,14 +200,23 @@ export function ClinicMap() {
           )}
         </div>
 
-        {isReady && route && (
+        {isReady && (routing || route) && (
           <div className="mt-5 flex items-center justify-between rounded-xl bg-secondary/60 px-4 py-3 text-sm">
             <span className="font-semibold text-foreground">{active}</span>
-            <span className="text-muted-foreground">
-              {route.distance} · ~{route.duration}
-            </span>
+            {routing ? (
+              <span className="flex items-center gap-2 text-muted-foreground">
+                <Loader2 className="h-4 w-4 animate-spin text-gold" /> Calculating…
+              </span>
+            ) : (
+              route && (
+                <span className="text-muted-foreground">
+                  {route.distance} · ~{route.duration} by car
+                </span>
+              )
+            )}
           </div>
         )}
+
 
         <a
           href={`https://www.google.com/maps/search/?api=1&query=${CLINIC.lat},${CLINIC.lng}`}
