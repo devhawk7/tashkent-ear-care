@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { MapPin, Navigation, ExternalLink, AlertTriangle, Loader2 } from "lucide-react";
+import { computeRoute } from "../lib/maps.functions";
 
 /* Clinic location — Babur Street, Tashkent */
 const CLINIC = { lat: 41.2994, lng: 69.262 };
