@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Phone, MapPin, Clock, Globe } from "lucide-react";
+import { ClinicMap } from "../components/ClinicMap";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -46,8 +47,8 @@ function ContactPage() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-24 lg:grid-cols-2">
-        <div>
+      <section className="mx-auto max-w-7xl px-6 py-24">
+        <div className="grid gap-10 lg:grid-cols-2">
           <div className="grid gap-5 sm:grid-cols-2">
             {details.map((d) => (
               <div key={d.t} className="rounded-2xl border border-border bg-card p-7 shadow-card">
@@ -66,7 +67,7 @@ function ContactPage() {
             ))}
           </div>
 
-          <div className="mt-8 rounded-2xl bg-secondary/50 p-8">
+          <div className="rounded-2xl bg-secondary/50 p-8">
             <h2 className="font-display text-2xl font-semibold text-foreground">
               ENT emergency?
             </h2>
@@ -82,16 +83,18 @@ function ContactPage() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-border shadow-card">
-          <iframe
-            title="LOR Clinic location on Babur Street, Tashkent"
-            src="https://www.google.com/maps?q=Babur%20Street%2C%20Tashkent%2C%20Uzbekistan&output=embed"
-            className="h-full min-h-[420px] w-full"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+        <div className="mt-12">
+          <h2 className="font-display text-3xl font-semibold text-foreground">Find us &amp; get directions</h2>
+          <p className="mt-2 max-w-xl text-muted-foreground">
+            We're on Babur Street in central Tashkent. Choose a starting point for driving
+            directions.
+          </p>
+          <div className="mt-8">
+            <ClinicMap />
+          </div>
         </div>
       </section>
     </>
   );
 }
+
