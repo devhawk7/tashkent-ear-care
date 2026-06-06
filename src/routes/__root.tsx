@@ -13,7 +13,6 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -87,7 +86,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Premium 24/7 ENT clinic on Babur Street, Tashkent. Expert ear, nose and throat care for adults, children, families, emergencies, expats and tourists. Russian & Uzbek.",
       },
       { name: "author", content: "LOR Clinic" },
-      { property: "og:title", content: "LOR Clinic — 24/7 ENT in Tashkent" },
+      { property: "og:title", content: "LOR Clinic — 24/7 ENT (Otolaryngology) in Tashkent" },
       {
         property: "og:description",
         content: "Luxury round-the-clock ENT care in Tashkent. Adults, children & emergencies.",
@@ -95,6 +94,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "LOR Clinic — 24/7 ENT (Otolaryngology) in Tashkent" },
+      { name: "description", content: "Tashkent ENT Care offers 24/7 otolaryngology services in Tashkent, Uzbekistan." },
+      { property: "og:description", content: "Tashkent ENT Care offers 24/7 otolaryngology services in Tashkent, Uzbekistan." },
+      { name: "twitter:description", content: "Tashkent ENT Care offers 24/7 otolaryngology services in Tashkent, Uzbekistan." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0a7f23c2-2376-4a6c-8f46-c1d457f4e3c8/id-preview-16cca4ff--c3c8c909-d1b4-4323-95b5-1869fd7e0e42.lovable.app-1780725694577.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0a7f23c2-2376-4a6c-8f46-c1d457f4e3c8/id-preview-16cca4ff--c3c8c909-d1b4-4323-95b5-1869fd7e0e42.lovable.app-1780725694577.png" },
     ],
     links: [
       {
@@ -143,7 +148,6 @@ function RootComponent() {
         </main>
         <Footer />
       </div>
-      <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );
 }
