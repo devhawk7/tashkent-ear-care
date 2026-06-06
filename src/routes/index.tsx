@@ -4,6 +4,7 @@ import { Phone, Clock, MapPin, Globe, ArrowRight, Star, ShieldCheck, HeartPulse 
 import heroImg from "../assets/hero.jpg";
 import consultImg from "../assets/consultation.jpg";
 import { services } from "../lib/services-data";
+import { ConsultationForm } from "../components/ConsultationForm";
 
 export const Route = createFileRoute("/")({
   head: () => ({
