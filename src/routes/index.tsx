@@ -246,6 +246,10 @@ function Home() {
               Find us <ArrowRight className="h-4 w-4" />
             </Link>
           </motion.div>
+
+          <div className="mx-auto mt-12 max-w-md text-left">
+            <ConsultationForm />
+          </div>
         </div>
       </section>
     </>
