@@ -93,12 +93,31 @@ export function ConsultationForm() {
       transition={{ duration: 0.5 }}
       className="rounded-2xl border border-border bg-card p-8 shadow-luxe"
     >
-      <h3 className="font-display text-2xl font-semibold text-foreground">
-        Request a consultation
-      </h3>
-      <p className="mt-2 text-sm text-muted-foreground">
-        Leave your name and phone number — our specialist will call you back, day or night.
-      </p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h3 className="font-display text-2xl font-semibold text-foreground">
+            {t.title}
+          </h3>
+          <p className="mt-2 text-sm text-muted-foreground">{t.subtitle}</p>
+        </div>
+        <div className="flex shrink-0 overflow-hidden rounded-full border border-border">
+          {(["ru", "uz"] as const).map((l) => (
+            <button
+              key={l}
+              type="button"
+              onClick={() => setLang(l)}
+              aria-pressed={lang === l}
+              className={`px-3 py-1.5 text-xs font-semibold uppercase transition-colors ${
+                lang === l
+                  ? "bg-gold text-gold-foreground"
+                  : "bg-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         <div className="relative">
