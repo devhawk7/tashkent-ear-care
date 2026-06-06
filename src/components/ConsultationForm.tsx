@@ -5,22 +5,66 @@ import { Phone, User, Send, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { requestConsultation } from "../lib/consultation.functions";
 
+type Lang = "ru" | "uz";
+
+const translations: Record<Lang, {
+  title: string;
+  subtitle: string;
+  namePlaceholder: string;
+  phonePlaceholder: string;
+  submit: string;
+  sending: string;
+  nameError: string;
+  phoneError: string;
+  success: string;
+  error: string;
+}> = {
+  ru: {
+    title: "Запись на консультацию",
+    subtitle:
+      "Оставьте имя и номер телефона — наш специалист перезвонит вам в любое время дня и ночи.",
+    namePlaceholder: "Ваше имя",
+    phonePlaceholder: "+998 ...",
+    submit: "Заказать звонок",
+    sending: "Отправка...",
+    nameError: "Пожалуйста, введите ваше имя",
+    phoneError: "Пожалуйста, введите корректный номер телефона",
+    success: "Спасибо! Мы скоро вам перезвоним.",
+    error: "Что-то пошло не так. Пожалуйста, позвоните нам.",
+  },
+  uz: {
+    title: "Konsultatsiyaga yozilish",
+    subtitle:
+      "Ism va telefon raqamingizni qoldiring — mutaxassisimiz kechayu kunduz sizga qo‘ng‘iroq qiladi.",
+    namePlaceholder: "Ismingiz",
+    phonePlaceholder: "+998 ...",
+    submit: "Qo‘ng‘iroqni so‘rash",
+    sending: "Yuborilmoqda...",
+    nameError: "Iltimos, ismingizni kiriting",
+    phoneError: "Iltimos, to‘g‘ri telefon raqamini kiriting",
+    success: "Rahmat! Tez orada sizga qo‘ng‘iroq qilamiz.",
+    error: "Xatolik yuz berdi. Iltimos, bizga qo‘ng‘iroq qiling.",
+  },
+};
+
 export function ConsultationForm() {
   const submit = useServerFn(requestConsultation);
+  const [lang, setLang] = useState<Lang>("ru");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
+  const t = translations[lang];
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (loading) return;
 
     if (name.trim().length < 2) {
-      toast.error("Please enter your name");
+      toast.error(t.nameError);
       return;
     }
     if (phone.trim().length < 6) {
-      toast.error("Please enter a valid phone number");
+      toast.error(t.phoneError);
       return;
     }
 
@@ -28,14 +72,14 @@ export function ConsultationForm() {
     try {
       const result = await submit({ data: { name: name.trim(), phone: phone.trim() } });
       if (result.ok) {
-        toast.success("Thank you! We'll call you back shortly.");
+        toast.success(t.success);
         setName("");
         setPhone("");
       } else {
-        toast.error(result.error ?? "Something went wrong. Please call us.");
+        toast.error(result.error ?? t.error);
       }
     } catch {
-      toast.error("Something went wrong. Please call us.");
+      toast.error(t.error);
     } finally {
       setLoading(false);
     }
@@ -49,12 +93,31 @@ export function ConsultationForm() {
       transition={{ duration: 0.5 }}
       className="rounded-2xl border border-border bg-card p-8 shadow-luxe"
     >
-      <h3 className="font-display text-2xl font-semibold text-foreground">
-        Request a consultation
-      </h3>
-      <p className="mt-2 text-sm text-muted-foreground">
-        Leave your name and phone number — our specialist will call you back, day or night.
-      </p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h3 className="font-display text-2xl font-semibold text-foreground">
+            {t.title}
+          </h3>
+          <p className="mt-2 text-sm text-muted-foreground">{t.subtitle}</p>
+        </div>
+        <div className="flex shrink-0 overflow-hidden rounded-full border border-border">
+          {(["ru", "uz"] as const).map((l) => (
+            <button
+              key={l}
+              type="button"
+              onClick={() => setLang(l)}
+              aria-pressed={lang === l}
+              className={`px-3 py-1.5 text-xs font-semibold uppercase transition-colors ${
+                lang === l
+                  ? "bg-gold text-gold-foreground"
+                  : "bg-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         <div className="relative">
@@ -63,7 +126,7 @@ export function ConsultationForm() {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Your name"
+            placeholder={t.namePlaceholder}
             maxLength={100}
             autoComplete="name"
             required
@@ -77,7 +140,7 @@ export function ConsultationForm() {
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="+998 ..."
+            placeholder={t.phonePlaceholder}
             maxLength={30}
             autoComplete="tel"
             required
@@ -92,11 +155,11 @@ export function ConsultationForm() {
         >
           {loading ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin" /> Sending...
+              <Loader2 className="h-4 w-4 animate-spin" /> {t.sending}
             </>
           ) : (
             <>
-              <Send className="h-4 w-4" /> Request a call back
+              <Send className="h-4 w-4" /> {t.submit}
             </>
           )}
         </button>
