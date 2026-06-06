@@ -140,7 +140,7 @@ export function ConsultationForm() {
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="+998 ..."
+            placeholder={t.phonePlaceholder}
             maxLength={30}
             autoComplete="tel"
             required
