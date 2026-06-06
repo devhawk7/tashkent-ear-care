@@ -4,6 +4,7 @@ import { Phone, Clock, MapPin, Globe, ArrowRight, Star, ShieldCheck, HeartPulse 
 import heroImg from "../assets/hero.jpg";
 import consultImg from "../assets/consultation.jpg";
 import { services } from "../lib/services-data";
+import { ConsultationForm } from "../components/ConsultationForm";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -245,6 +246,10 @@ function Home() {
               Find us <ArrowRight className="h-4 w-4" />
             </Link>
           </motion.div>
+
+          <div className="mx-auto mt-12 max-w-md text-left">
+            <ConsultationForm />
+          </div>
         </div>
       </section>
     </>
