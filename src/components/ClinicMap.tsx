@@ -65,11 +65,14 @@ function directionsUrl(area: Area) {
 export function ClinicMap() {
   const mapEl = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
-  const dirServiceRef = useRef<any>(null);
-  const dirRendererRef = useRef<any>(null);
+  const markerRef = useRef<any>(null);
+  const polylineRef = useRef<any>(null);
+
+  const fetchRoute = useServerFn(computeRoute);
 
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [active, setActive] = useState<string | null>(null);
+  const [routing, setRouting] = useState(false);
   const [route, setRoute] = useState<{ distance: string; duration: string } | null>(null);
 
   useEffect(() => {
@@ -90,13 +93,7 @@ export function ClinicMap() {
           streetViewControl: false,
           fullscreenControl: true,
         });
-        new g.maps.Marker({ position: CLINIC, map, title: CLINIC_LABEL });
-        dirServiceRef.current = new g.maps.DirectionsService();
-        dirRendererRef.current = new g.maps.DirectionsRenderer({
-          map,
-          suppressMarkers: false,
-          polylineOptions: { strokeColor: "#9a7b2e", strokeWeight: 5, strokeOpacity: 0.9 },
-        });
+        markerRef.current = new g.maps.Marker({ position: CLINIC, map, title: CLINIC_LABEL });
         mapRef.current = map;
         clearTimeout(timeout);
         setStatus("ready");
@@ -113,27 +110,49 @@ export function ClinicMap() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const showRoute = useCallback((area: Area) => {
-    const g = (window as any).google;
-    if (!g || !dirServiceRef.current || !dirRendererRef.current) return;
-    setActive(area.name);
-    dirServiceRef.current.route(
-      {
-        origin: { lat: area.lat, lng: area.lng },
-        destination: CLINIC,
-        travelMode: g.maps.TravelMode.DRIVING,
-      },
-      (result: any, requestStatus: string) => {
-        if (requestStatus === "OK" && result) {
-          dirRendererRef.current.setDirections(result);
-          const leg = result.routes?.[0]?.legs?.[0];
-          if (leg) setRoute({ distance: leg.distance?.text ?? "", duration: leg.duration?.text ?? "" });
-        } else {
-          setRoute(null);
-        }
-      },
-    );
-  }, []);
+  const showRoute = useCallback(
+    async (area: Area) => {
+      const g = (window as any).google;
+      if (!g || !mapRef.current) return;
+      setActive(area.name);
+      setRouting(true);
+      setRoute(null);
+      try {
+        const result = await fetchRoute({
+          data: {
+            originLat: area.lat,
+            originLng: area.lng,
+            destLat: CLINIC.lat,
+            destLng: CLINIC.lng,
+          },
+        });
+
+        const path = g.maps.geometry.encoding.decodePath(result.encodedPolyline);
+        if (polylineRef.current) polylineRef.current.setMap(null);
+        polylineRef.current = new g.maps.Polyline({
+          path,
+          map: mapRef.current,
+          strokeColor: "#9a7b2e",
+          strokeWeight: 5,
+          strokeOpacity: 0.9,
+        });
+
+        const bounds = new g.maps.LatLngBounds();
+        path.forEach((p: any) => bounds.extend(p));
+        mapRef.current.fitBounds(bounds, 60);
+
+        setRoute({ distance: result.distanceText, duration: result.durationText });
+      } catch {
+        // If routing fails, open external Google Maps directions as a fallback
+        window.open(directionsUrl(area), "_blank", "noopener,noreferrer");
+        setRoute(null);
+      } finally {
+        setRouting(false);
+      }
+    },
+    [fetchRoute],
+  );
+
 
   const isReady = status === "ready";
 
