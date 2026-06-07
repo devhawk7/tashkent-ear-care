@@ -65,12 +65,14 @@ function directionsUrl(area: Area) {
 }
 
 export function ClinicMap() {
+  const { t } = useLang();
   const mapEl = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
   const polylineRef = useRef<any>(null);
 
   const fetchRoute = useServerFn(computeRoute);
+
 
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [active, setActive] = useState<string | null>(null);
