@@ -5,6 +5,8 @@ import heroImg from "../assets/hero.jpg";
 import consultImg from "../assets/consultation.jpg";
 import { services } from "../lib/services-data";
 import { ConsultationForm } from "../components/ConsultationForm";
+import { useLang } from "../lib/i18n";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
