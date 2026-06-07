@@ -245,7 +245,7 @@ export function ClinicMap() {
         {status === "loading" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-card text-muted-foreground">
             <Loader2 className="h-6 w-6 animate-spin text-gold" />
-            <span className="text-sm">Loading map…</span>
+            <span className="text-sm">{t.map.loading}</span>
           </div>
         )}
 
@@ -256,11 +256,10 @@ export function ClinicMap() {
             </div>
             <div>
               <p className="font-display text-xl font-semibold text-foreground">
-                Map unavailable offline
+                {t.map.unavailableTitle}
               </p>
               <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
-                We couldn’t load the interactive map. You can still find us at the address below or
-                open directions in Google Maps.
+                {t.map.unavailableBody}
               </p>
             </div>
             <div className="w-full max-w-sm rounded-xl border border-border bg-card p-5 text-left shadow-card">
