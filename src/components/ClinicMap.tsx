@@ -118,7 +118,7 @@ export function ClinicMap() {
     async (area: Area) => {
       const g = (window as any).google;
       if (!g || !mapRef.current) return;
-      setActive(area.name);
+      setActive(area.id);
       setRouting(true);
       setRoute(null);
       try {
