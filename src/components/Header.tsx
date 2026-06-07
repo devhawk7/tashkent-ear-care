@@ -1,16 +1,19 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
-
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/services", label: "Services" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
-] as const;
+import { useLang } from "../lib/i18n";
+import { LanguageToggle } from "./LanguageToggle";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { t } = useLang();
+
+  const links = [
+    { to: "/", label: t.nav.home },
+    { to: "/services", label: t.nav.services },
+    { to: "/about", label: t.nav.about },
+    { to: "/contact", label: t.nav.contact },
+  ] as const;
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
@@ -38,6 +41,7 @@ export function Header() {
               {l.label}
             </Link>
           ))}
+          <LanguageToggle />
           <a
             href="tel:+998950955050"
             className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-card transition-transform hover:scale-[1.03]"
@@ -47,13 +51,16 @@ export function Header() {
           </a>
         </nav>
 
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X /> : <Menu />}
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <LanguageToggle />
+          <button
+            className="text-foreground"
+            onClick={() => setOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X /> : <Menu />}
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -73,7 +80,7 @@ export function Header() {
             href="tel:+998950955050"
             className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
           >
-            <Phone className="h-4 w-4" /> Call 24/7
+            <Phone className="h-4 w-4" /> {t.common.callNow}
           </a>
         </nav>
       )}

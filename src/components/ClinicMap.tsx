@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { MapPin, Navigation, ExternalLink, AlertTriangle, Loader2 } from "lucide-react";
 import { computeRoute } from "../lib/maps.functions";
+import { useLang } from "../lib/i18n";
 
 /* Clinic location — Babur Street, Tashkent */
 const CLINIC = { lat: 41.2994, lng: 69.262 };
@@ -9,15 +10,16 @@ const CLINIC_LABEL = "LOR Clinic — Babur Street, Tashkent";
 
 /* Key areas around Tashkent to offer directions from */
 const KEY_AREAS = [
-  { name: "Tashkent Int’l Airport", lat: 41.2579, lng: 69.2817 },
-  { name: "Amir Temur Square", lat: 41.3111, lng: 69.2797 },
-  { name: "Chorsu Bazaar", lat: 41.3258, lng: 69.2349 },
-  { name: "Railway Station", lat: 41.2906, lng: 69.2731 },
-  { name: "Yunusabad", lat: 41.364, lng: 69.289 },
-  { name: "Mirzo Ulugbek", lat: 41.33, lng: 69.334 },
+  { id: "airport", lat: 41.2579, lng: 69.2817 },
+  { id: "amir", lat: 41.3111, lng: 69.2797 },
+  { id: "chorsu", lat: 41.3258, lng: 69.2349 },
+  { id: "railway", lat: 41.2906, lng: 69.2731 },
+  { id: "yunusabad", lat: 41.364, lng: 69.289 },
+  { id: "ulugbek", lat: 41.33, lng: 69.334 },
 ] as const;
 
 type Area = (typeof KEY_AREAS)[number];
+
 
 const BROWSER_KEY = import.meta.env.VITE_LOVABLE_CONNECTOR_GOOGLE_MAPS_BROWSER_KEY as
   | string
@@ -63,12 +65,14 @@ function directionsUrl(area: Area) {
 }
 
 export function ClinicMap() {
+  const { t } = useLang();
   const mapEl = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
   const polylineRef = useRef<any>(null);
 
   const fetchRoute = useServerFn(computeRoute);
+
 
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [active, setActive] = useState<string | null>(null);
@@ -114,7 +118,7 @@ export function ClinicMap() {
     async (area: Area) => {
       const g = (window as any).google;
       if (!g || !mapRef.current) return;
-      setActive(area.name);
+      setActive(area.id);
       setRouting(true);
       setRoute(null);
       try {
@@ -162,39 +166,37 @@ export function ClinicMap() {
       <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
         <div className="flex items-center gap-2">
           <Navigation className="h-5 w-5 text-gold" />
-          <h3 className="font-display text-xl font-semibold text-foreground">Directions to us</h3>
+          <h3 className="font-display text-xl font-semibold text-foreground">{t.map.title}</h3>
         </div>
         <p className="mt-2 text-sm text-muted-foreground">
-          {isReady
-            ? "Select a starting point to see the driving route."
-            : "Tap an area to open turn-by-turn directions in Google Maps."}
+          {isReady ? t.map.subReady : t.map.subFallback}
         </p>
 
         <div className="mt-5 grid gap-2.5 sm:grid-cols-2">
           {KEY_AREAS.map((area) =>
             isReady ? (
               <button
-                key={area.name}
+                key={area.id}
                 onClick={() => showRoute(area)}
                 className={`flex items-center gap-2 rounded-xl border px-3.5 py-3 text-left text-sm font-medium transition-colors ${
-                  active === area.name
+                  active === area.id
                     ? "border-gold bg-gold/10 text-foreground"
                     : "border-border bg-background text-muted-foreground hover:border-gold/60 hover:text-foreground"
                 }`}
               >
                 <MapPin className="h-4 w-4 shrink-0 text-gold" />
-                {area.name}
+                {t.map.areas[area.id]}
               </button>
             ) : (
               <a
-                key={area.name}
+                key={area.id}
                 href={directionsUrl(area)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 rounded-xl border border-border bg-background px-3.5 py-3 text-left text-sm font-medium text-muted-foreground transition-colors hover:border-gold/60 hover:text-foreground"
               >
                 <MapPin className="h-4 w-4 shrink-0 text-gold" />
-                {area.name}
+                {t.map.areas[area.id]}
               </a>
             ),
           )}
@@ -202,20 +204,23 @@ export function ClinicMap() {
 
         {isReady && (routing || route) && (
           <div className="mt-5 flex items-center justify-between rounded-xl bg-secondary/60 px-4 py-3 text-sm">
-            <span className="font-semibold text-foreground">{active}</span>
+            <span className="font-semibold text-foreground">
+              {active ? t.map.areas[active] : ""}
+            </span>
             {routing ? (
               <span className="flex items-center gap-2 text-muted-foreground">
-                <Loader2 className="h-4 w-4 animate-spin text-gold" /> Calculating…
+                <Loader2 className="h-4 w-4 animate-spin text-gold" /> {t.map.calculating}
               </span>
             ) : (
               route && (
                 <span className="text-muted-foreground">
-                  {route.distance} · ~{route.duration} by car
+                  {route.distance} · ~{route.duration} {t.map.byCar}
                 </span>
               )
             )}
           </div>
         )}
+
 
 
         <a
@@ -224,7 +229,7 @@ export function ClinicMap() {
           rel="noopener noreferrer"
           className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-gold"
         >
-          Open clinic in Google Maps <ExternalLink className="h-4 w-4" />
+          {t.map.openMaps} <ExternalLink className="h-4 w-4" />
         </a>
       </div>
 
@@ -240,7 +245,7 @@ export function ClinicMap() {
         {status === "loading" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-card text-muted-foreground">
             <Loader2 className="h-6 w-6 animate-spin text-gold" />
-            <span className="text-sm">Loading map…</span>
+            <span className="text-sm">{t.map.loading}</span>
           </div>
         )}
 
@@ -251,11 +256,10 @@ export function ClinicMap() {
             </div>
             <div>
               <p className="font-display text-xl font-semibold text-foreground">
-                Map unavailable offline
+                {t.map.unavailableTitle}
               </p>
               <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
-                We couldn’t load the interactive map. You can still find us at the address below or
-                open directions in Google Maps.
+                {t.map.unavailableBody}
               </p>
             </div>
             <div className="w-full max-w-sm rounded-xl border border-border bg-card p-5 text-left shadow-card">
@@ -275,7 +279,7 @@ export function ClinicMap() {
                 rel="noopener noreferrer"
                 className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.02]"
               >
-                Open in Google Maps <ExternalLink className="h-4 w-4" />
+                {t.map.openMaps} <ExternalLink className="h-4 w-4" />
               </a>
             </div>
           </div>
