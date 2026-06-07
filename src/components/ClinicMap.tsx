@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { MapPin, Navigation, ExternalLink, AlertTriangle, Loader2 } from "lucide-react";
 import { computeRoute } from "../lib/maps.functions";
+import { useLang } from "../lib/i18n";
 
 /* Clinic location — Babur Street, Tashkent */
 const CLINIC = { lat: 41.2994, lng: 69.262 };
@@ -9,15 +10,16 @@ const CLINIC_LABEL = "LOR Clinic — Babur Street, Tashkent";
 
 /* Key areas around Tashkent to offer directions from */
 const KEY_AREAS = [
-  { name: "Tashkent Int’l Airport", lat: 41.2579, lng: 69.2817 },
-  { name: "Amir Temur Square", lat: 41.3111, lng: 69.2797 },
-  { name: "Chorsu Bazaar", lat: 41.3258, lng: 69.2349 },
-  { name: "Railway Station", lat: 41.2906, lng: 69.2731 },
-  { name: "Yunusabad", lat: 41.364, lng: 69.289 },
-  { name: "Mirzo Ulugbek", lat: 41.33, lng: 69.334 },
+  { id: "airport", lat: 41.2579, lng: 69.2817 },
+  { id: "amir", lat: 41.3111, lng: 69.2797 },
+  { id: "chorsu", lat: 41.3258, lng: 69.2349 },
+  { id: "railway", lat: 41.2906, lng: 69.2731 },
+  { id: "yunusabad", lat: 41.364, lng: 69.289 },
+  { id: "ulugbek", lat: 41.33, lng: 69.334 },
 ] as const;
 
 type Area = (typeof KEY_AREAS)[number];
+
 
 const BROWSER_KEY = import.meta.env.VITE_LOVABLE_CONNECTOR_GOOGLE_MAPS_BROWSER_KEY as
   | string
