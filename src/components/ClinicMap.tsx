@@ -229,7 +229,7 @@ export function ClinicMap() {
           rel="noopener noreferrer"
           className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-gold"
         >
-          Open clinic in Google Maps <ExternalLink className="h-4 w-4" />
+          {t.map.openMaps} <ExternalLink className="h-4 w-4" />
         </a>
       </div>
 
