@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { Phone } from "lucide-react";
 import { services } from "../lib/services-data";
+import { useLang } from "../lib/i18n";
+
 
 export const Route = createFileRoute("/services")({
   head: () => ({
