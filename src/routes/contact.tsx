@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Phone, MapPin, Clock, Globe } from "lucide-react";
 import { ClinicMap } from "../components/ClinicMap";
+import { useLang } from "../lib/i18n";
+
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
