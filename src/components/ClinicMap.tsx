@@ -166,39 +166,37 @@ export function ClinicMap() {
       <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
         <div className="flex items-center gap-2">
           <Navigation className="h-5 w-5 text-gold" />
-          <h3 className="font-display text-xl font-semibold text-foreground">Directions to us</h3>
+          <h3 className="font-display text-xl font-semibold text-foreground">{t.map.title}</h3>
         </div>
         <p className="mt-2 text-sm text-muted-foreground">
-          {isReady
-            ? "Select a starting point to see the driving route."
-            : "Tap an area to open turn-by-turn directions in Google Maps."}
+          {isReady ? t.map.subReady : t.map.subFallback}
         </p>
 
         <div className="mt-5 grid gap-2.5 sm:grid-cols-2">
           {KEY_AREAS.map((area) =>
             isReady ? (
               <button
-                key={area.name}
+                key={area.id}
                 onClick={() => showRoute(area)}
                 className={`flex items-center gap-2 rounded-xl border px-3.5 py-3 text-left text-sm font-medium transition-colors ${
-                  active === area.name
+                  active === area.id
                     ? "border-gold bg-gold/10 text-foreground"
                     : "border-border bg-background text-muted-foreground hover:border-gold/60 hover:text-foreground"
                 }`}
               >
                 <MapPin className="h-4 w-4 shrink-0 text-gold" />
-                {area.name}
+                {t.map.areas[area.id]}
               </button>
             ) : (
               <a
-                key={area.name}
+                key={area.id}
                 href={directionsUrl(area)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 rounded-xl border border-border bg-background px-3.5 py-3 text-left text-sm font-medium text-muted-foreground transition-colors hover:border-gold/60 hover:text-foreground"
               >
                 <MapPin className="h-4 w-4 shrink-0 text-gold" />
-                {area.name}
+                {t.map.areas[area.id]}
               </a>
             ),
           )}
@@ -206,20 +204,23 @@ export function ClinicMap() {
 
         {isReady && (routing || route) && (
           <div className="mt-5 flex items-center justify-between rounded-xl bg-secondary/60 px-4 py-3 text-sm">
-            <span className="font-semibold text-foreground">{active}</span>
+            <span className="font-semibold text-foreground">
+              {active ? t.map.areas[active] : ""}
+            </span>
             {routing ? (
               <span className="flex items-center gap-2 text-muted-foreground">
-                <Loader2 className="h-4 w-4 animate-spin text-gold" /> Calculating…
+                <Loader2 className="h-4 w-4 animate-spin text-gold" /> {t.map.calculating}
               </span>
             ) : (
               route && (
                 <span className="text-muted-foreground">
-                  {route.distance} · ~{route.duration} by car
+                  {route.distance} · ~{route.duration} {t.map.byCar}
                 </span>
               )
             )}
           </div>
         )}
+
 
 
         <a
