@@ -6,7 +6,7 @@ import { Reveal } from "../components/Reveal";
 import { InvestorCard } from "../components/Cards";
 import { investors, industries, stages, countries, type Stage } from "../lib/data";
 
-export const Route = createFileRoute("/investors")({
+export const Route = createFileRoute("/investors/")({
   head: () => ({
     meta: [
       { title: "Browse Investors — Ventra.uz" },
