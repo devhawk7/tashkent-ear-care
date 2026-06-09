@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import { SiteLayout } from "../components/SiteLayout";
 import { VerifiedBadge, Pill, StageBadge } from "../components/Badges";
-import { investors, stages } from "../lib/data";
+import { investors, stages, type Investor } from "../lib/data";
 
 export const Route = createFileRoute("/investors/$slug")({
   head: ({ params }) => {
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/investors/$slug")({
 });
 
 function InvestorProfile() {
-  const inv = Route.useLoaderData();
+  const inv = Route.useLoaderData() as Investor;
 
   return (
     <SiteLayout>
