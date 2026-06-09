@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { DashboardLayout, type NavItem } from "../components/DashboardLayout";
-import { StageBadge } from "../components/Badges";
 import { startups } from "../lib/data";
 
 export const Route = createFileRoute("/investor-dashboard")({
