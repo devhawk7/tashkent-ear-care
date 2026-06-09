@@ -1,9 +1,17 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Heart, ArrowRight, Lock, Linkedin as LinkedinIcon, Globe } from "lucide-react";
+import { Heart, ArrowRight, Lock, Globe } from "lucide-react";
 import { toast } from "sonner";
 import { SiteLayout } from "../components/SiteLayout";
 import { StageBadge, VerifiedBadge, Pill } from "../components/Badges";
 import { startups } from "../lib/data";
+
+function LinkedinIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.55V9h3.57v11.45Z" />
+    </svg>
+  );
+}
 
 export const Route = createFileRoute("/startups/$slug")({
   head: ({ params }) => {
