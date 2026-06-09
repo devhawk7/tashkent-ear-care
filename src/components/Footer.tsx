@@ -1,81 +1,70 @@
 import { Link } from "@tanstack/react-router";
-import { Phone, MapPin, Clock, Globe } from "lucide-react";
-import { useLang } from "../lib/i18n";
+import { Logo } from "./Logo";
+
+const cols = [
+  {
+    title: "Platform",
+    links: [
+      { label: "Browse startups", to: "/startups" },
+      { label: "Browse investors", to: "/investors" },
+      { label: "How it works", to: "/how-it-works" },
+      { label: "Pricing", to: "/about" },
+    ],
+  },
+  {
+    title: "For founders",
+    links: [
+      { label: "List your startup", to: "/signup" },
+      { label: "Founder dashboard", to: "/dashboard" },
+      { label: "Get verified", to: "/how-it-works" },
+      { label: "Resources", to: "/about" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About", to: "/about" },
+      { label: "Careers", to: "/about" },
+      { label: "Contact", to: "/about" },
+      { label: "Privacy", to: "/about" },
+    ],
+  },
+] as const;
 
 export function Footer() {
-  const { t } = useLang();
-
-  const navItems = [
-    { to: "/", l: t.nav.home },
-    { to: "/services", l: t.nav.services },
-    { to: "/about", l: t.nav.about },
-    { to: "/contact", l: t.nav.contact },
-  ] as const;
-
   return (
-    <footer className="border-t border-border/60 bg-primary text-primary-foreground">
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-4">
-        <div className="md:col-span-1">
-          <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-gold to-primary-foreground/20 font-display text-lg font-bold text-primary">
-              L
-            </span>
-            <span className="font-display text-xl font-semibold">LOR Clinic</span>
+    <footer className="border-t border-white/10 bg-navy px-6 pb-10 pt-16 text-white sm:px-12">
+      <div className="mx-auto grid max-w-[1200px] gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div>
+          <Logo light />
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/40">
+            The CIS region's most trusted startup-investor marketplace. Where great founders meet smart capital.
+          </p>
+        </div>
+        {cols.map((col) => (
+          <div key={col.title}>
+            <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-white/40">{col.title}</p>
+            <ul className="mt-4 space-y-3">
+              {col.links.map((l) => (
+                <li key={l.label}>
+                  <Link to={l.to} className="text-sm text-white/45 transition-colors hover:text-white/80">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-          <p className="mt-4 text-sm text-primary-foreground/70">{t.footer.tagline}</p>
-        </div>
-
-        <div>
-          <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">
-            {t.footer.navigate}
-          </h4>
-          <ul className="mt-4 space-y-2 text-sm text-primary-foreground/70">
-            {navItems.map((i) => (
-              <li key={i.to}>
-                <Link to={i.to} className="transition-colors hover:text-gold">
-                  {i.l}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">
-            {t.footer.contact}
-          </h4>
-          <ul className="mt-4 space-y-3 text-sm text-primary-foreground/70">
-            <li className="flex items-start gap-2">
-              <Phone className="mt-0.5 h-4 w-4 text-gold" />
-              <a href="tel:+998950955050" className="hover:text-gold">+998 95 095 50 50</a>
-            </li>
-            <li className="flex items-start gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 text-gold" /> {t.footer.address}
-            </li>
-            <li className="flex items-start gap-2">
-              <Clock className="mt-0.5 h-4 w-4 text-gold" /> {t.footer.hours}
-            </li>
-            <li className="flex items-start gap-2">
-              <Globe className="mt-0.5 h-4 w-4 text-gold" /> {t.common.languages}
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">
-            {t.footer.emergency}
-          </h4>
-          <p className="mt-4 text-sm text-primary-foreground/70">{t.footer.emergencyBody}</p>
-          <a
-            href="tel:+998950955050"
-            className="mt-4 inline-flex rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground transition-transform hover:scale-[1.03]"
-          >
-            {t.common.callNow}
-          </a>
-        </div>
+        ))}
       </div>
-      <div className="border-t border-primary-foreground/10 py-6 text-center text-xs text-primary-foreground/50">
-        © {new Date().getFullYear()} {t.footer.rights}
+      <div className="mx-auto mt-12 flex max-w-[1200px] flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-6 sm:flex-row">
+        <p className="text-sm text-white/30">© 2025 Ventra.uz. All rights reserved.</p>
+        <div className="flex items-center gap-3 text-sm">
+          <button className="font-medium text-white/70">EN</button>
+          <span className="text-white/20">|</span>
+          <button className="text-white/30 hover:text-white/70">RU</button>
+          <span className="text-white/20">|</span>
+          <button className="text-white/30 hover:text-white/70">UZ</button>
+        </div>
       </div>
     </footer>
   );

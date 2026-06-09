@@ -1,122 +1,107 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "motion/react";
-import { Users, Baby, Plane, Building2, ShieldCheck, Clock, Award, HeartHandshake } from "lucide-react";
-import consultImg from "../assets/consultation.jpg";
-import { useLang } from "../lib/i18n";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
+import { SiteLayout } from "../components/SiteLayout";
+import { Reveal } from "../components/Reveal";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About LOR Clinic — 24/7 ENT Specialists in Tashkent" },
-      {
-        name: "description",
-        content:
-          "Learn about LOR Clinic, a premium 24/7 ENT clinic in Tashkent serving adults, children, families, expats, tourists and corporate clients in Russian and Uzbek.",
-      },
-      { property: "og:title", content: "About LOR Clinic — ENT Specialists in Tashkent" },
-      {
-        property: "og:description",
-        content: "A luxury ENT clinic dedicated to round-the-clock, patient-first care in Tashkent.",
-      },
+      { title: "About — Ventra.uz" },
+      { name: "description", content: "Ventra is building the trusted infrastructure for startup fundraising across Uzbekistan and the CIS — connecting founders with the capital and investors they deserve." },
+      { property: "og:title", content: "About — Ventra.uz" },
+      { property: "og:description", content: "Building the trusted fundraising infrastructure for the CIS." },
     ],
     links: [{ rel: "canonical", href: "/about" }],
   }),
   component: AboutPage,
 });
 
-const audienceIcons = [Users, Baby, Plane, Building2];
-const valueIcons = [Clock, ShieldCheck, Award, HeartHandshake];
+const values = [
+  { title: "Trust first", desc: "Every profile is verified. We protect both sides with transparency and accountability." },
+  { title: "Local authority", desc: "Built in Tashkent, for the CIS — with deep knowledge of regional markets and regulation." },
+  { title: "Founder obsessed", desc: "Fundraising should be focused and fair. We remove noise so the best companies get funded." },
+];
+
+const team = [
+  { name: "Bobur Jurayev", role: "Co-founder & CEO", initials: "BJ", gradient: "from-[#2563eb] to-[#3b82f6]" },
+  { name: "Dilnoza Saidova", role: "Co-founder & CTO", initials: "DS", gradient: "from-[#22c55e] to-[#16a34a]" },
+  { name: "Rustam Tashmatov", role: "Head of Investor Relations", initials: "RT", gradient: "from-[#8b5cf6] to-[#6366f1]" },
+  { name: "Nilufar Umarova", role: "Head of Community", initials: "NU", gradient: "from-[#ec4899] to-[#db2777]" },
+];
 
 function AboutPage() {
-  const { t } = useLang();
-
   return (
-    <>
-      <section className="bg-primary py-24 text-primary-foreground">
-        <div className="mx-auto max-w-7xl px-6">
-          <span className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">
-            {t.about.eyebrow}
-          </span>
-          <h1 className="mt-4 max-w-3xl font-display text-5xl font-semibold md:text-6xl">
-            {t.about.title}
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg text-primary-foreground/80">{t.about.intro}</p>
+    <SiteLayout>
+      <section className="bg-gradient-to-b from-white to-gray50 py-24">
+        <div className="mx-auto max-w-[1200px] px-6">
+          <Reveal>
+            <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-brand">About Ventra</p>
+            <h1 className="mt-3 max-w-3xl text-[40px] font-bold leading-[1.1] tracking-[-0.8px] text-navy sm:text-[52px]">
+              Building the trusted home for CIS fundraising
+            </h1>
+            <p className="mt-5 max-w-2xl text-lg text-gray600">
+              Ventra connects Uzbekistan's most promising founders with investors who understand the region.
+              Our mission is to channel smart capital to the companies shaping Central Asia's future.
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl items-center gap-14 px-6 py-24 md:grid-cols-2">
-        <motion.img
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          src={consultImg}
-          alt="LOR Clinic luxury ENT interior in Tashkent"
-          width={1280}
-          height={1280}
-          loading="lazy"
-          className="rounded-2xl shadow-luxe"
-        />
-        <div>
-          <h2 className="font-display text-4xl font-semibold text-foreground">{t.about.careTitle}</h2>
-          <p className="mt-6 text-lg text-muted-foreground">{t.about.careBody1}</p>
-          <p className="mt-4 text-lg text-muted-foreground">{t.about.careBody2}</p>
+      <section className="mx-auto max-w-[1200px] px-6 py-20">
+        <div className="grid gap-6 md:grid-cols-3">
+          {values.map((v, i) => (
+            <Reveal key={v.title} delay={i * 0.08}>
+              <div className="h-full rounded-2xl border border-gray200 p-8">
+                <h2 className="text-lg font-bold text-navy">{v.title}</h2>
+                <p className="mt-2 text-gray600">{v.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <div className="mt-16 grid grid-cols-2 gap-6 rounded-3xl bg-navy p-10 text-center text-white sm:grid-cols-4">
+          {[
+            { v: "340+", l: "Startups verified" },
+            { v: "$28M", l: "Capital connected" },
+            { v: "120+", l: "Active investors" },
+            { v: "14", l: "Countries in CIS" },
+          ].map((s) => (
+            <div key={s.l}>
+              <p className="text-3xl font-extrabold tracking-tight sm:text-4xl">{s.v}</p>
+              <p className="mt-1 text-sm text-white/55">{s.l}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section className="bg-secondary/40 py-24">
-        <div className="mx-auto max-w-7xl px-6">
-          <h2 className="text-center font-display text-4xl font-semibold text-foreground">
-            {t.about.audiencesTitle}
-          </h2>
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {t.about.audiences.map((a, idx) => {
-              const Icon = audienceIcons[idx];
-              return (
-                <motion.div
-                  key={a.t}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.5, delay: (idx % 4) * 0.08 }}
-                  className="rounded-2xl border border-border bg-card p-7 shadow-card"
-                >
-                  <Icon className="h-7 w-7 text-gold" />
-                  <h3 className="mt-5 font-display text-xl font-semibold text-foreground">{a.t}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{a.s}</p>
-                </motion.div>
-              );
-            })}
+      <section className="mx-auto max-w-[1200px] px-6 pb-20">
+        <Reveal>
+          <h2 className="text-[32px] font-bold tracking-[-0.5px] text-navy">The team</h2>
+          <p className="mt-2 text-gray600">Operators and investors who've built and backed companies across the region.</p>
+        </Reveal>
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {team.map((m, i) => (
+            <Reveal key={m.name} delay={(i % 4) * 0.08}>
+              <div className="rounded-2xl border border-gray200 p-6 text-center">
+                <div className={`mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br ${m.gradient} text-base font-bold text-white`}>{m.initials}</div>
+                <p className="mt-4 text-sm font-bold text-navy">{m.name}</p>
+                <p className="text-xs text-gray400">{m.role}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <div className="mt-16 rounded-3xl bg-accent p-12 text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-navy">Join the network</h2>
+          <p className="mx-auto mt-3 max-w-md text-gray600">Whether you're raising or investing, Ventra is where the right connections happen.</p>
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <Link to="/signup" className="inline-flex items-center gap-2 rounded-xl bg-brand px-6 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-0.5">
+              Get started <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link to="/how-it-works" className="rounded-xl border border-gray200 bg-white px-6 py-3 text-sm font-semibold text-navy hover:bg-gray50">How it works</Link>
           </div>
         </div>
       </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <h2 className="text-center font-display text-4xl font-semibold text-foreground">
-          {t.about.apartTitle}
-        </h2>
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {t.about.values.map((v, idx) => {
-            const Icon = valueIcons[idx];
-            return (
-              <motion.div
-                key={v.t}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: (idx % 4) * 0.08 }}
-                className="rounded-2xl border border-border bg-card p-7 text-center shadow-card"
-              >
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-gold/20 to-primary/10 text-primary">
-                  <Icon className="h-6 w-6" />
-                </div>
-                <h3 className="mt-5 font-display text-xl font-semibold text-foreground">{v.t}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{v.s}</p>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-    </>
+    </SiteLayout>
   );
 }
