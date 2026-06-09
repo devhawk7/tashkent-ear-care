@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
+import { Route as StartupsRouteImport } from './routes/startups'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
@@ -19,6 +20,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const VerifyEmailRoute = VerifyEmailRouteImport.update({
   id: '/verify-email',
   path: '/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StartupsRoute = StartupsRouteImport.update({
+  id: '/startups',
+  path: '/startups',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/startups': typeof StartupsRoute
   '/verify-email': typeof VerifyEmailRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/startups': typeof StartupsRoute
   '/verify-email': typeof VerifyEmailRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/startups': typeof StartupsRoute
   '/verify-email': typeof VerifyEmailRoute
 }
 export interface FileRouteTypes {
@@ -80,6 +89,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signin'
     | '/signup'
+    | '/startups'
     | '/verify-email'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signin'
     | '/signup'
+    | '/startups'
     | '/verify-email'
   id:
     | '__root__'
@@ -96,6 +107,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signin'
     | '/signup'
+    | '/startups'
     | '/verify-email'
   fileRoutesById: FileRoutesById
 }
@@ -105,6 +117,7 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
+  StartupsRoute: typeof StartupsRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
 }
 
@@ -115,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/verify-email'
       fullPath: '/verify-email'
       preLoaderRoute: typeof VerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/startups': {
+      id: '/startups'
+      path: '/startups'
+      fullPath: '/startups'
+      preLoaderRoute: typeof StartupsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -161,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
+  StartupsRoute: StartupsRoute,
   VerifyEmailRoute: VerifyEmailRoute,
 }
 export const routeTree = rootRouteImport
