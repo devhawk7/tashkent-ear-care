@@ -17,6 +17,8 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as InvestorsRouteImport } from './routes/investors'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StartupsIndexRouteImport } from './routes/startups.index'
+import { Route as InvestorsIndexRouteImport } from './routes/investors.index'
 
 const VerifyEmailRoute = VerifyEmailRouteImport.update({
   id: '/verify-email',
@@ -58,37 +60,51 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StartupsIndexRoute = StartupsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => StartupsRoute,
+} as any)
+const InvestorsIndexRoute = InvestorsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => InvestorsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/investors': typeof InvestorsRoute
+  '/investors': typeof InvestorsRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
-  '/startups': typeof StartupsRoute
+  '/startups': typeof StartupsRouteWithChildren
   '/verify-email': typeof VerifyEmailRoute
+  '/investors/': typeof InvestorsIndexRoute
+  '/startups/': typeof StartupsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/investors': typeof InvestorsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
-  '/startups': typeof StartupsRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/investors': typeof InvestorsIndexRoute
+  '/startups': typeof StartupsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/investors': typeof InvestorsRoute
+  '/investors': typeof InvestorsRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
-  '/startups': typeof StartupsRoute
+  '/startups': typeof StartupsRouteWithChildren
   '/verify-email': typeof VerifyEmailRoute
+  '/investors/': typeof InvestorsIndexRoute
+  '/startups/': typeof StartupsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,16 +117,18 @@ export interface FileRouteTypes {
     | '/signup'
     | '/startups'
     | '/verify-email'
+    | '/investors/'
+    | '/startups/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/forgot-password'
-    | '/investors'
     | '/reset-password'
     | '/signin'
     | '/signup'
-    | '/startups'
     | '/verify-email'
+    | '/investors'
+    | '/startups'
   id:
     | '__root__'
     | '/'
@@ -121,16 +139,18 @@ export interface FileRouteTypes {
     | '/signup'
     | '/startups'
     | '/verify-email'
+    | '/investors/'
+    | '/startups/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
-  InvestorsRoute: typeof InvestorsRoute
+  InvestorsRoute: typeof InvestorsRouteWithChildren
   ResetPasswordRoute: typeof ResetPasswordRoute
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
-  StartupsRoute: typeof StartupsRoute
+  StartupsRoute: typeof StartupsRouteWithChildren
   VerifyEmailRoute: typeof VerifyEmailRoute
 }
 
@@ -192,19 +212,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/startups/': {
+      id: '/startups/'
+      path: '/'
+      fullPath: '/startups/'
+      preLoaderRoute: typeof StartupsIndexRouteImport
+      parentRoute: typeof StartupsRoute
+    }
+    '/investors/': {
+      id: '/investors/'
+      path: '/'
+      fullPath: '/investors/'
+      preLoaderRoute: typeof InvestorsIndexRouteImport
+      parentRoute: typeof InvestorsRoute
+    }
   }
 }
+
+interface InvestorsRouteChildren {
+  InvestorsIndexRoute: typeof InvestorsIndexRoute
+}
+
+const InvestorsRouteChildren: InvestorsRouteChildren = {
+  InvestorsIndexRoute: InvestorsIndexRoute,
+}
+
+const InvestorsRouteWithChildren = InvestorsRoute._addFileChildren(
+  InvestorsRouteChildren,
+)
+
+interface StartupsRouteChildren {
+  StartupsIndexRoute: typeof StartupsIndexRoute
+}
+
+const StartupsRouteChildren: StartupsRouteChildren = {
+  StartupsIndexRoute: StartupsIndexRoute,
+}
+
+const StartupsRouteWithChildren = StartupsRoute._addFileChildren(
+  StartupsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
-  InvestorsRoute: InvestorsRoute,
+  InvestorsRoute: InvestorsRouteWithChildren,
   ResetPasswordRoute: ResetPasswordRoute,
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
-  StartupsRoute: StartupsRoute,
+  StartupsRoute: StartupsRouteWithChildren,
   VerifyEmailRoute: VerifyEmailRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
