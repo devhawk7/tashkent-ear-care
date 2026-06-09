@@ -107,7 +107,7 @@ function StartupProfile() {
             <Card>
               <SectionLabel>Traction</SectionLabel>
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-                {s.traction.map((t) => (
+                {s.traction.map((t: typeof s.traction[number]) => (
                   <div key={t.label}>
                     <p className="text-[11px] font-bold uppercase tracking-[0.06em] text-gray400">{t.label}</p>
                     <p className="mt-1 text-xl font-bold text-navy">{t.value}</p>
@@ -120,7 +120,7 @@ function StartupProfile() {
             <Card>
               <SectionLabel>Team</SectionLabel>
               <div className="grid gap-4 sm:grid-cols-2">
-                {s.team.map((m) => (
+                {s.team.map((m: typeof s.team[number]) => (
                   <div key={m.name} className="flex items-center gap-3 rounded-xl border border-gray100 p-3">
                     <div className="flex h-11 w-11 items-center justify-center rounded-full bg-secondary text-sm font-bold text-navy">{m.initials}</div>
                     <div className="flex-1">
@@ -130,7 +130,7 @@ function StartupProfile() {
                       </div>
                       <p className="text-xs text-gray400">{m.role}</p>
                     </div>
-                    <Linkedin className="h-4 w-4 text-gray400" />
+                    <LinkedinIcon className="h-4 w-4 text-gray400" />
                   </div>
                 ))}
               </div>
