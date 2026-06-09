@@ -20,6 +20,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as StartupsIndexRouteImport } from './routes/startups.index'
 import { Route as InvestorsIndexRouteImport } from './routes/investors.index'
 import { Route as StartupsSlugRouteImport } from './routes/startups.$slug'
+import { Route as InvestorsSlugRouteImport } from './routes/investors.$slug'
 
 const VerifyEmailRoute = VerifyEmailRouteImport.update({
   id: '/verify-email',
@@ -76,6 +77,11 @@ const StartupsSlugRoute = StartupsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => StartupsRoute,
 } as any)
+const InvestorsSlugRoute = InvestorsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => InvestorsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/startups': typeof StartupsRouteWithChildren
   '/verify-email': typeof VerifyEmailRoute
+  '/investors/$slug': typeof InvestorsSlugRoute
   '/startups/$slug': typeof StartupsSlugRoute
   '/investors/': typeof InvestorsIndexRoute
   '/startups/': typeof StartupsIndexRoute
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/investors/$slug': typeof InvestorsSlugRoute
   '/startups/$slug': typeof StartupsSlugRoute
   '/investors': typeof InvestorsIndexRoute
   '/startups': typeof StartupsIndexRoute
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/startups': typeof StartupsRouteWithChildren
   '/verify-email': typeof VerifyEmailRoute
+  '/investors/$slug': typeof InvestorsSlugRoute
   '/startups/$slug': typeof StartupsSlugRoute
   '/investors/': typeof InvestorsIndexRoute
   '/startups/': typeof StartupsIndexRoute
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/startups'
     | '/verify-email'
+    | '/investors/$slug'
     | '/startups/$slug'
     | '/investors/'
     | '/startups/'
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/signup'
     | '/verify-email'
+    | '/investors/$slug'
     | '/startups/$slug'
     | '/investors'
     | '/startups'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/startups'
     | '/verify-email'
+    | '/investors/$slug'
     | '/startups/$slug'
     | '/investors/'
     | '/startups/'
@@ -245,14 +257,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StartupsSlugRouteImport
       parentRoute: typeof StartupsRoute
     }
+    '/investors/$slug': {
+      id: '/investors/$slug'
+      path: '/$slug'
+      fullPath: '/investors/$slug'
+      preLoaderRoute: typeof InvestorsSlugRouteImport
+      parentRoute: typeof InvestorsRoute
+    }
   }
 }
 
 interface InvestorsRouteChildren {
+  InvestorsSlugRoute: typeof InvestorsSlugRoute
   InvestorsIndexRoute: typeof InvestorsIndexRoute
 }
 
 const InvestorsRouteChildren: InvestorsRouteChildren = {
+  InvestorsSlugRoute: InvestorsSlugRoute,
   InvestorsIndexRoute: InvestorsIndexRoute,
 }
 
@@ -287,3 +308,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
