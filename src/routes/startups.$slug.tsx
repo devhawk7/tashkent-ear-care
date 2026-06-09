@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Heart, ArrowRight, Lock, Linkedin, Globe } from "lucide-react";
+import { Heart, ArrowRight, Lock, Linkedin as LinkedinIcon, Globe } from "lucide-react";
 import { toast } from "sonner";
 import { SiteLayout } from "../components/SiteLayout";
 import { StageBadge, VerifiedBadge, Pill } from "../components/Badges";
