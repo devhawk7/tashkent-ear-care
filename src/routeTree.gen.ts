@@ -19,6 +19,7 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StartupsIndexRouteImport } from './routes/startups.index'
 import { Route as InvestorsIndexRouteImport } from './routes/investors.index'
+import { Route as StartupsSlugRouteImport } from './routes/startups.$slug'
 
 const VerifyEmailRoute = VerifyEmailRouteImport.update({
   id: '/verify-email',
@@ -70,6 +71,11 @@ const InvestorsIndexRoute = InvestorsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => InvestorsRoute,
 } as any)
+const StartupsSlugRoute = StartupsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => StartupsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/startups': typeof StartupsRouteWithChildren
   '/verify-email': typeof VerifyEmailRoute
+  '/startups/$slug': typeof StartupsSlugRoute
   '/investors/': typeof InvestorsIndexRoute
   '/startups/': typeof StartupsIndexRoute
 }
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/startups/$slug': typeof StartupsSlugRoute
   '/investors': typeof InvestorsIndexRoute
   '/startups': typeof StartupsIndexRoute
 }
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/startups': typeof StartupsRouteWithChildren
   '/verify-email': typeof VerifyEmailRoute
+  '/startups/$slug': typeof StartupsSlugRoute
   '/investors/': typeof InvestorsIndexRoute
   '/startups/': typeof StartupsIndexRoute
 }
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/startups'
     | '/verify-email'
+    | '/startups/$slug'
     | '/investors/'
     | '/startups/'
   fileRoutesByTo: FileRoutesByTo
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/signup'
     | '/verify-email'
+    | '/startups/$slug'
     | '/investors'
     | '/startups'
   id:
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/startups'
     | '/verify-email'
+    | '/startups/$slug'
     | '/investors/'
     | '/startups/'
   fileRoutesById: FileRoutesById
@@ -226,6 +238,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InvestorsIndexRouteImport
       parentRoute: typeof InvestorsRoute
     }
+    '/startups/$slug': {
+      id: '/startups/$slug'
+      path: '/$slug'
+      fullPath: '/startups/$slug'
+      preLoaderRoute: typeof StartupsSlugRouteImport
+      parentRoute: typeof StartupsRoute
+    }
   }
 }
 
@@ -242,10 +261,12 @@ const InvestorsRouteWithChildren = InvestorsRoute._addFileChildren(
 )
 
 interface StartupsRouteChildren {
+  StartupsSlugRoute: typeof StartupsSlugRoute
   StartupsIndexRoute: typeof StartupsIndexRoute
 }
 
 const StartupsRouteChildren: StartupsRouteChildren = {
+  StartupsSlugRoute: StartupsSlugRoute,
   StartupsIndexRoute: StartupsIndexRoute,
 }
 
