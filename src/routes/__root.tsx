@@ -76,24 +76,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Ventra.uz — Where great startups meet smart capital" },
+      { title: "Doctor Vays — Клиника эстетической медицины" },
       {
         name: "description",
         content:
-          "Ventra connects Uzbekistan's most promising founders with investors backing the next generation of Central Asian tech. The CIS region's trusted startup-investor marketplace.",
+          "Doctor Vays — премиальная клиника эстетической медицины в Ташкенте. Ботокс, филлеры, лазерная терапия и контурная пластика под контролем врачей.",
       },
-      { name: "author", content: "Ventra.uz" },
-      { property: "og:title", content: "Ventra.uz — Where great startups meet smart capital" },
+      { name: "author", content: "Doctor Vays" },
+      { property: "og:title", content: "Doctor Vays — Клиника эстетической медицины" },
       {
         property: "og:description",
-        content: "The CIS region's most trusted startup-investor marketplace.",
+        content: "Премиальная эстетическая медицина европейского уровня в Ташкенте.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Ventra.uz — Where great startups meet smart capital" },
+      { name: "twitter:title", content: "Doctor Vays — Клиника эстетической медицины" },
       {
         name: "twitter:description",
-        content: "The CIS region's most trusted startup-investor marketplace.",
+        content: "Премиальная эстетическая медицина европейского уровня в Ташкенте.",
       },
     ],
     links: [
@@ -102,7 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap",
       },
     ],
   }),
