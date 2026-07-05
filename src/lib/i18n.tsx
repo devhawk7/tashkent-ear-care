@@ -245,7 +245,7 @@ const translations = {
       cta: "Shaxsiy konsultatsiya so‘rash",
     },
   },
-} as const;
+};
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: Dict };
 
