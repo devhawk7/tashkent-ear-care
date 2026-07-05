@@ -12,6 +12,8 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "../components/ui/sonner";
+import { LanguageProvider } from "../lib/i18n";
+import { ConsultationProvider } from "../lib/consultation";
 
 function NotFoundComponent() {
   return (
@@ -19,11 +21,11 @@ function NotFoundComponent() {
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold text-navy">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-navy">Page not found</h2>
-        <p className="mt-2 text-sm text-gray600">The page you're looking for doesn't exist or has moved.</p>
+        <p className="mt-2 text-sm text-muted-ink">The page you're looking for doesn't exist or has moved.</p>
         <div className="mt-6">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-xl bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brandhover"
+            className="inline-flex items-center justify-center rounded-xl bg-navy px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-navyhover"
           >
             Back to home
           </Link>
@@ -44,7 +46,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-white px-4">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold tracking-tight text-navy">This page didn't load</h1>
-        <p className="mt-2 text-sm text-gray600">
+        <p className="mt-2 text-sm text-muted-ink">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
@@ -53,13 +55,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-xl bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brandhover"
+            className="inline-flex items-center justify-center rounded-xl bg-navy px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-navyhover"
           >
             Try again
           </button>
           <a
             href="/"
-            className="inline-flex items-center justify-center rounded-xl border border-gray200 bg-white px-5 py-2.5 text-sm font-medium text-navy transition-colors hover:bg-gray50"
+            className="inline-flex items-center justify-center rounded-xl border border-border bg-white px-5 py-2.5 text-sm font-medium text-navy transition-colors hover:bg-muted"
           >
             Go home
           </a>
@@ -74,24 +76,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Ventra.uz — Where great startups meet smart capital" },
+      { title: "Doctor Vays — Клиника эстетической медицины" },
       {
         name: "description",
         content:
-          "Ventra connects Uzbekistan's most promising founders with investors backing the next generation of Central Asian tech. The CIS region's trusted startup-investor marketplace.",
+          "Doctor Vays — премиальная клиника эстетической медицины в Ташкенте. Ботокс, филлеры, лазерная терапия и контурная пластика под контролем врачей.",
       },
-      { name: "author", content: "Ventra.uz" },
-      { property: "og:title", content: "Ventra.uz — Where great startups meet smart capital" },
+      { name: "author", content: "Doctor Vays" },
+      { property: "og:title", content: "Doctor Vays — Клиника эстетической медицины" },
       {
         property: "og:description",
-        content: "The CIS region's most trusted startup-investor marketplace.",
+        content: "Премиальная эстетическая медицина европейского уровня в Ташкенте.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Ventra.uz — Where great startups meet smart capital" },
+      { name: "twitter:title", content: "Doctor Vays — Клиника эстетической медицины" },
       {
         name: "twitter:description",
-        content: "The CIS region's most trusted startup-investor marketplace.",
+        content: "Премиальная эстетическая медицина европейского уровня в Ташкенте.",
       },
     ],
     links: [
@@ -100,7 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap",
       },
     ],
   }),
@@ -129,8 +131,12 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
-      <Toaster position="bottom-right" />
+      <LanguageProvider>
+        <ConsultationProvider>
+          <Outlet />
+          <Toaster position="bottom-right" />
+        </ConsultationProvider>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }

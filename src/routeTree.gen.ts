@@ -9,306 +9,48 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as VerifyEmailRouteImport } from './routes/verify-email'
-import { Route as StartupsRouteImport } from './routes/startups'
-import { Route as SignupRouteImport } from './routes/signup'
-import { Route as SigninRouteImport } from './routes/signin'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as InvestorsRouteImport } from './routes/investors'
-import { Route as InvestorDashboardRouteImport } from './routes/investor-dashboard'
-import { Route as HowItWorksRouteImport } from './routes/how-it-works'
-import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
-import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as StartupsIndexRouteImport } from './routes/startups.index'
-import { Route as InvestorsIndexRouteImport } from './routes/investors.index'
-import { Route as StartupsSlugRouteImport } from './routes/startups.$slug'
-import { Route as InvestorsSlugRouteImport } from './routes/investors.$slug'
+import { Route as ServiceIdRouteImport } from './routes/service.$id'
 
-const VerifyEmailRoute = VerifyEmailRouteImport.update({
-  id: '/verify-email',
-  path: '/verify-email',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StartupsRoute = StartupsRouteImport.update({
-  id: '/startups',
-  path: '/startups',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SignupRoute = SignupRouteImport.update({
-  id: '/signup',
-  path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SigninRoute = SigninRouteImport.update({
-  id: '/signin',
-  path: '/signin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InvestorsRoute = InvestorsRouteImport.update({
-  id: '/investors',
-  path: '/investors',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InvestorDashboardRoute = InvestorDashboardRouteImport.update({
-  id: '/investor-dashboard',
-  path: '/investor-dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HowItWorksRoute = HowItWorksRouteImport.update({
-  id: '/how-it-works',
-  path: '/how-it-works',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
-  id: '/forgot-password',
-  path: '/forgot-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StartupsIndexRoute = StartupsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => StartupsRoute,
-} as any)
-const InvestorsIndexRoute = InvestorsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => InvestorsRoute,
-} as any)
-const StartupsSlugRoute = StartupsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => StartupsRoute,
-} as any)
-const InvestorsSlugRoute = InvestorsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => InvestorsRoute,
+const ServiceIdRoute = ServiceIdRouteImport.update({
+  id: '/service/$id',
+  path: '/service/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/dashboard': typeof DashboardRoute
-  '/forgot-password': typeof ForgotPasswordRoute
-  '/how-it-works': typeof HowItWorksRoute
-  '/investor-dashboard': typeof InvestorDashboardRoute
-  '/investors': typeof InvestorsRouteWithChildren
-  '/reset-password': typeof ResetPasswordRoute
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
-  '/startups': typeof StartupsRouteWithChildren
-  '/verify-email': typeof VerifyEmailRoute
-  '/investors/$slug': typeof InvestorsSlugRoute
-  '/startups/$slug': typeof StartupsSlugRoute
-  '/investors/': typeof InvestorsIndexRoute
-  '/startups/': typeof StartupsIndexRoute
+  '/service/$id': typeof ServiceIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/dashboard': typeof DashboardRoute
-  '/forgot-password': typeof ForgotPasswordRoute
-  '/how-it-works': typeof HowItWorksRoute
-  '/investor-dashboard': typeof InvestorDashboardRoute
-  '/reset-password': typeof ResetPasswordRoute
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
-  '/verify-email': typeof VerifyEmailRoute
-  '/investors/$slug': typeof InvestorsSlugRoute
-  '/startups/$slug': typeof StartupsSlugRoute
-  '/investors': typeof InvestorsIndexRoute
-  '/startups': typeof StartupsIndexRoute
+  '/service/$id': typeof ServiceIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/dashboard': typeof DashboardRoute
-  '/forgot-password': typeof ForgotPasswordRoute
-  '/how-it-works': typeof HowItWorksRoute
-  '/investor-dashboard': typeof InvestorDashboardRoute
-  '/investors': typeof InvestorsRouteWithChildren
-  '/reset-password': typeof ResetPasswordRoute
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
-  '/startups': typeof StartupsRouteWithChildren
-  '/verify-email': typeof VerifyEmailRoute
-  '/investors/$slug': typeof InvestorsSlugRoute
-  '/startups/$slug': typeof StartupsSlugRoute
-  '/investors/': typeof InvestorsIndexRoute
-  '/startups/': typeof StartupsIndexRoute
+  '/service/$id': typeof ServiceIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/about'
-    | '/dashboard'
-    | '/forgot-password'
-    | '/how-it-works'
-    | '/investor-dashboard'
-    | '/investors'
-    | '/reset-password'
-    | '/signin'
-    | '/signup'
-    | '/startups'
-    | '/verify-email'
-    | '/investors/$slug'
-    | '/startups/$slug'
-    | '/investors/'
-    | '/startups/'
+  fullPaths: '/' | '/service/$id'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/about'
-    | '/dashboard'
-    | '/forgot-password'
-    | '/how-it-works'
-    | '/investor-dashboard'
-    | '/reset-password'
-    | '/signin'
-    | '/signup'
-    | '/verify-email'
-    | '/investors/$slug'
-    | '/startups/$slug'
-    | '/investors'
-    | '/startups'
-  id:
-    | '__root__'
-    | '/'
-    | '/about'
-    | '/dashboard'
-    | '/forgot-password'
-    | '/how-it-works'
-    | '/investor-dashboard'
-    | '/investors'
-    | '/reset-password'
-    | '/signin'
-    | '/signup'
-    | '/startups'
-    | '/verify-email'
-    | '/investors/$slug'
-    | '/startups/$slug'
-    | '/investors/'
-    | '/startups/'
+  to: '/' | '/service/$id'
+  id: '__root__' | '/' | '/service/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  DashboardRoute: typeof DashboardRoute
-  ForgotPasswordRoute: typeof ForgotPasswordRoute
-  HowItWorksRoute: typeof HowItWorksRoute
-  InvestorDashboardRoute: typeof InvestorDashboardRoute
-  InvestorsRoute: typeof InvestorsRouteWithChildren
-  ResetPasswordRoute: typeof ResetPasswordRoute
-  SigninRoute: typeof SigninRoute
-  SignupRoute: typeof SignupRoute
-  StartupsRoute: typeof StartupsRouteWithChildren
-  VerifyEmailRoute: typeof VerifyEmailRoute
+  ServiceIdRoute: typeof ServiceIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/verify-email': {
-      id: '/verify-email'
-      path: '/verify-email'
-      fullPath: '/verify-email'
-      preLoaderRoute: typeof VerifyEmailRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/startups': {
-      id: '/startups'
-      path: '/startups'
-      fullPath: '/startups'
-      preLoaderRoute: typeof StartupsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/signin': {
-      id: '/signin'
-      path: '/signin'
-      fullPath: '/signin'
-      preLoaderRoute: typeof SigninRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/investors': {
-      id: '/investors'
-      path: '/investors'
-      fullPath: '/investors'
-      preLoaderRoute: typeof InvestorsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/investor-dashboard': {
-      id: '/investor-dashboard'
-      path: '/investor-dashboard'
-      fullPath: '/investor-dashboard'
-      preLoaderRoute: typeof InvestorDashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/how-it-works': {
-      id: '/how-it-works'
-      path: '/how-it-works'
-      fullPath: '/how-it-works'
-      preLoaderRoute: typeof HowItWorksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/forgot-password': {
-      id: '/forgot-password'
-      path: '/forgot-password'
-      fullPath: '/forgot-password'
-      preLoaderRoute: typeof ForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -316,78 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/startups/': {
-      id: '/startups/'
-      path: '/'
-      fullPath: '/startups/'
-      preLoaderRoute: typeof StartupsIndexRouteImport
-      parentRoute: typeof StartupsRoute
-    }
-    '/investors/': {
-      id: '/investors/'
-      path: '/'
-      fullPath: '/investors/'
-      preLoaderRoute: typeof InvestorsIndexRouteImport
-      parentRoute: typeof InvestorsRoute
-    }
-    '/startups/$slug': {
-      id: '/startups/$slug'
-      path: '/$slug'
-      fullPath: '/startups/$slug'
-      preLoaderRoute: typeof StartupsSlugRouteImport
-      parentRoute: typeof StartupsRoute
-    }
-    '/investors/$slug': {
-      id: '/investors/$slug'
-      path: '/$slug'
-      fullPath: '/investors/$slug'
-      preLoaderRoute: typeof InvestorsSlugRouteImport
-      parentRoute: typeof InvestorsRoute
+    '/service/$id': {
+      id: '/service/$id'
+      path: '/service/$id'
+      fullPath: '/service/$id'
+      preLoaderRoute: typeof ServiceIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface InvestorsRouteChildren {
-  InvestorsSlugRoute: typeof InvestorsSlugRoute
-  InvestorsIndexRoute: typeof InvestorsIndexRoute
-}
-
-const InvestorsRouteChildren: InvestorsRouteChildren = {
-  InvestorsSlugRoute: InvestorsSlugRoute,
-  InvestorsIndexRoute: InvestorsIndexRoute,
-}
-
-const InvestorsRouteWithChildren = InvestorsRoute._addFileChildren(
-  InvestorsRouteChildren,
-)
-
-interface StartupsRouteChildren {
-  StartupsSlugRoute: typeof StartupsSlugRoute
-  StartupsIndexRoute: typeof StartupsIndexRoute
-}
-
-const StartupsRouteChildren: StartupsRouteChildren = {
-  StartupsSlugRoute: StartupsSlugRoute,
-  StartupsIndexRoute: StartupsIndexRoute,
-}
-
-const StartupsRouteWithChildren = StartupsRoute._addFileChildren(
-  StartupsRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  DashboardRoute: DashboardRoute,
-  ForgotPasswordRoute: ForgotPasswordRoute,
-  HowItWorksRoute: HowItWorksRoute,
-  InvestorDashboardRoute: InvestorDashboardRoute,
-  InvestorsRoute: InvestorsRouteWithChildren,
-  ResetPasswordRoute: ResetPasswordRoute,
-  SigninRoute: SigninRoute,
-  SignupRoute: SignupRoute,
-  StartupsRoute: StartupsRouteWithChildren,
-  VerifyEmailRoute: VerifyEmailRoute,
+  ServiceIdRoute: ServiceIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
