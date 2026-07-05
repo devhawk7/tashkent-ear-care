@@ -13,7 +13,7 @@ export function Footer() {
           <Logo light />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-alabaster/50">{t.footer.tagline}</p>
           <div className="mt-5 flex items-center gap-3">
-            {[Instagram, Facebook, Send].map((Icon, i) => (
+            {[Send, MessageCircle, Phone].map((Icon, i) => (
               <a
                 key={i}
                 href="#"
