@@ -21,11 +21,11 @@ function NotFoundComponent() {
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold text-navy">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-navy">Page not found</h2>
-        <p className="mt-2 text-sm text-gray600">The page you're looking for doesn't exist or has moved.</p>
+        <p className="mt-2 text-sm text-muted-ink">The page you're looking for doesn't exist or has moved.</p>
         <div className="mt-6">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-xl bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brandhover"
+            className="inline-flex items-center justify-center rounded-xl bg-navy px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-navyhover"
           >
             Back to home
           </Link>
@@ -46,7 +46,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-white px-4">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold tracking-tight text-navy">This page didn't load</h1>
-        <p className="mt-2 text-sm text-gray600">
+        <p className="mt-2 text-sm text-muted-ink">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
@@ -55,13 +55,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-xl bg-brand px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brandhover"
+            className="inline-flex items-center justify-center rounded-xl bg-navy px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-navyhover"
           >
             Try again
           </button>
           <a
             href="/"
-            className="inline-flex items-center justify-center rounded-xl border border-gray200 bg-white px-5 py-2.5 text-sm font-medium text-navy transition-colors hover:bg-gray50"
+            className="inline-flex items-center justify-center rounded-xl border border-border bg-white px-5 py-2.5 text-sm font-medium text-navy transition-colors hover:bg-muted"
           >
             Go home
           </a>
